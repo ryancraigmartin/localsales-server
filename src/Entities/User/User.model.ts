@@ -7,7 +7,7 @@ import {
   UpdateDateColumn,
   BaseEntity,
 } from 'typeorm'
-import { InputType, Field, ObjectType, ID } from 'type-graphql'
+import { Field, ObjectType, ID } from 'type-graphql'
 
 @ObjectType()
 @Entity()
@@ -32,24 +32,24 @@ export class User extends BaseEntity {
   @Column()
   password!: string
 
-  @Field()
-  @Column()
+  @Field({ nullable: true })
+  @Column({ nullable: true })
   firstName?: string
 
-  @Field()
-  @Column()
+  @Field({ nullable: true })
+  @Column({ nullable: true })
   lastName?: string
 
-  @Field()
-  @Column()
+  @Field({ nullable: true })
+  @Column({ nullable: true })
   nickname?: string
 
-  @Field()
-  @Column()
+  @Field({ nullable: true })
+  @Column({ nullable: true })
   bio?: string
 
-  @Field()
-  @Column()
+  @Field({ nullable: true })
+  @Column({ nullable: true })
   location?: string
 
   @Field(() => String)
@@ -83,16 +83,4 @@ export class User extends BaseEntity {
   // @Field()
   // @Column()
   // reputation?: Reputation;
-}
-
-@InputType({ description: 'Input needed to create a new user.' })
-export class AddUserInput implements Partial<User> {
-  @Field({ nullable: false })
-  username: string
-
-  @Field({ nullable: false })
-  email: string
-
-  @Field({ nullable: false })
-  password: string
 }

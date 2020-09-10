@@ -12,7 +12,7 @@ export class ListingResolver {
 
   @Query(() => Listing, { nullable: true })
   listingById(@Arg('listingUUID', () => String) listingUUID: string): Promise<Listing | undefined> {
-    return Listing.findOne({ where: { listing_uuid: listingUUID } })
+    return Listing.findOne({ where: { listingUUID: listingUUID } })
   }
 
   @Mutation(() => Listing)

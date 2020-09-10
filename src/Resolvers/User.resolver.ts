@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from 'uuid'
-import { User, AddUserInput } from '../Entities/User/User.model'
+import { User } from '../Entities/User/User.model'
+import { AddUserInput } from '../Entities/User/User.inputs'
 import { Resolver, Query, Mutation, Arg } from 'type-graphql'
 
 @Resolver()
