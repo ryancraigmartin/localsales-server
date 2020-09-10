@@ -1,57 +1,64 @@
 // import { Listing } from './../Listing/Listing.model';
-import { Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, BaseEntity } from 'typeorm'
-import { InputType, Field, ObjectType, ID } from "type-graphql"
+import {
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+  BaseEntity,
+} from 'typeorm'
+import { InputType, Field, ObjectType, ID } from 'type-graphql'
 
 @ObjectType()
 @Entity()
-export class User extends BaseEntity{
+export class User extends BaseEntity {
   @Field(() => ID)
   @PrimaryGeneratedColumn()
-  id!: number;
+  id!: number
 
   @Field()
   @Column({ unique: true })
-  uuid!: string;
+  userUUID!: string
 
   @Field()
   @Column({ unique: true })
-  username!: string;
+  username!: string
 
   @Field()
   @Column({ unique: true })
-  email!: string;
+  email!: string
 
   @Field()
   @Column()
-  password!: string;
+  password!: string
 
   @Field()
   @Column()
-  firstName?: string;
+  firstName?: string
 
   @Field()
   @Column()
-  lastName?: string;
+  lastName?: string
 
   @Field()
   @Column()
-  nickname?: string;
+  nickname?: string
 
   @Field()
   @Column()
-  bio?: string;
+  bio?: string
 
   @Field()
   @Column()
-  location?: string;
+  location?: string
 
   @Field(() => String)
   @CreateDateColumn()
-  createdAt: Date;
+  createdAt: Date
 
   @Field(() => String)
   @UpdateDateColumn()
-  updatedAt: Date;
+  updatedAt: Date
 
   // @Field()
   // @Column()
@@ -76,15 +83,16 @@ export class User extends BaseEntity{
   // @Field()
   // @Column()
   // reputation?: Reputation;
-
 }
 
-@InputType({description: "Input needed to create a new user."})
+@InputType({ description: 'Input needed to create a new user.' })
 export class AddUserInput implements Partial<User> {
   @Field({ nullable: false })
   username: string
+
   @Field({ nullable: false })
   email: string
+
   @Field({ nullable: false })
   password: string
 }

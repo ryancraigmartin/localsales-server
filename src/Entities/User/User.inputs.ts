@@ -1,10 +1,8 @@
-import { User } from './User.model';
-import { InputType, Field } from "type-graphql"
-User
+import { User } from './User.model'
+import { InputType, Field } from 'type-graphql'
 
-@InputType({description: "Input needed to create a new user."})
+@InputType({ description: 'Input needed to create a new user.' })
 export class AddUserInput implements Partial<User> {
-
   @Field({ nullable: false })
   username: string
 
@@ -13,5 +11,4 @@ export class AddUserInput implements Partial<User> {
 
   @Field({ nullable: false })
   password: string
-
 }

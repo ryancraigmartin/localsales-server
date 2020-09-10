@@ -1,9 +1,6 @@
-import { User } from './User/User.model';
-import { Listing } from './Listing/Listing.model';
+import { User } from './User/User.model'
+import { Listing } from './Listing/Listing.model'
 
-const entities = [
-  User,
-  Listing
-];
+const entities = [User, Listing]
 
 module.exports = entities

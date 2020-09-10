@@ -1,37 +1,44 @@
-import { Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, BaseEntity } from 'typeorm'
-import { Field, ObjectType, ID } from "type-graphql"
-import { Condition } from './Listing.enums';
+import {
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+  BaseEntity,
+} from 'typeorm'
+import { Field, ObjectType, ID } from 'type-graphql'
+import { Condition } from './Listing.enums'
 
 @ObjectType()
 @Entity()
-export class Listing extends BaseEntity{
+export class Listing extends BaseEntity {
   @Field(() => ID)
   @PrimaryGeneratedColumn()
-  id!: number;
+  id!: number
 
   @Field()
   @Column({ unique: true })
-  uuid!: string;
+  listingUUID!: string
 
   @Field()
   @Column()
-  title!: string;
+  title!: string
 
   @Field()
   @Column()
-  description!: string;
+  description!: string
 
   @Field()
   @Column()
-  condition!: Condition;
+  condition!: Condition
 
   @Field(() => String)
   @CreateDateColumn()
-  createdAt: Date;
+  createdAt: Date
 
   @Field(() => String)
   @UpdateDateColumn()
-  updatedAt: Date;
+  updatedAt: Date
 
   // @Field()
   // @Column()

@@ -1,13 +1,13 @@
-import { registerEnumType } from 'type-graphql';
+import { registerEnumType } from 'type-graphql'
 
 export enum Condition {
-  new = "NEW",
-  likeNew = "LIKE NEW",
-  openBox = "OPEN BOX",
-  used = "USED",
+  new = 'NEW',
+  likeNew = 'LIKE NEW',
+  openBox = 'OPEN BOX',
+  used = 'USED',
 }
 
 registerEnumType(Condition, {
-  name: "Condition",
-  description: "Condition of the item being listed."
+  name: 'Condition',
+  description: 'Condition of the item being listed.',
 })
