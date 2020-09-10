@@ -2,9 +2,9 @@ import "reflect-metadata";
 import * as express from "express";
 import { createConnection } from "typeorm";
 import { ApolloServer } from "apollo-server-express";
-import { User } from "./Models/User.model"
 import { buildSchema } from "type-graphql";
 const resolvers = require("./Resolvers/index");
+const entities = require("./Entities/index");
 
 const startServer = async () => {
   try {
@@ -23,7 +23,7 @@ const startServer = async () => {
       port: 5432,
       logging: true,
       synchronize: true,
-      entities: [User]
+      entities,
     });
 
     const app = express();

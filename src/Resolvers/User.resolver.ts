@@ -1,6 +1,5 @@
-import { AddUserInput } from '../Inputs/User.inputs';
 import { v4 as uuidv4 } from 'uuid';
-import { User } from "../Models/User.model";
+import { User, AddUserInput } from "../Entities/User/User.model";
 import { Resolver, Query, Mutation, Arg} from "type-graphql"
 
 @Resolver()
@@ -19,7 +18,7 @@ export class UserResolver {
   async addUser(@Arg("data") {username, password, email}: AddUserInput) {
       try {
         const user = User.create({
-          uuid: uuidv4(),
+          user_uuid: uuidv4(),
           username,
           password,
           email,

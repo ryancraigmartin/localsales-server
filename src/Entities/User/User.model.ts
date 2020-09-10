@@ -1,6 +1,5 @@
-// import { v4 as uuidv4 } from 'uuid';
 import { Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, BaseEntity } from 'typeorm'
-import { Field, ObjectType, ID } from "type-graphql"
+import { InputType, Field, ObjectType, ID } from "type-graphql"
 
 @ObjectType()
 @Entity()
@@ -11,7 +10,7 @@ export class User extends BaseEntity{
 
   @Field()
   @Column({ unique: true })
-  uuid!: string;
+  user_uuid!: string;
 
   @Field()
   @Column({ unique: true })
@@ -35,4 +34,14 @@ export class User extends BaseEntity{
 
   // @OneToMany(() => Listing, (listing) => listing.user)
   // listings: Listing[];
+}
+
+@InputType({description: "Input needed to create a new user."})
+export class AddUserInput implements Partial<User> {
+  @Field({ nullable: false })
+  username: string
+  @Field({ nullable: false })
+  email: string
+  @Field({ nullable: false })
+  password: string
 }

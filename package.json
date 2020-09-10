@@ -2,9 +2,9 @@
   "name": "typegresql",
   "version": "1.0.0",
   "description": "typegresql",
-  "main": "index.ts",
+  "main": "server.ts",
   "scripts": {
-    "start": "ts-node src/index.ts",
+    "start": "ts-node src/server.ts",
     "test": ""
   },
   "keywords": [],
