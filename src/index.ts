@@ -2,31 +2,39 @@ import "reflect-metadata";
 import * as express from "express";
 import { createConnection } from "typeorm";
 import { ApolloServer } from "apollo-server-express";
-import { User } from "./entities/User"
-import { typeDefs } from "./typeDefs";
-import { resolvers } from "./resolvers";
+import { User } from "./Models/User.model"
+import { buildSchema } from "type-graphql";
+const resolvers = require("./Resolvers/index");
 
 const startServer = async () => {
-  const server = new ApolloServer({ typeDefs, resolvers });
+  try {
+    // Build TypeGraphQL executable schema
+    const schema = await buildSchema({resolvers})
 
-  await createConnection({
-    type: 'postgres',
-    database: 'localsales',
-    username: 'ryan',
-    password: 'postgres',
-    port: 5432,
-    logging: true,
-    synchronize: true,
-    entities: [User]
-  });
+    // Create server with TypeGraphQL schema
+    const server = new ApolloServer({schema});
 
-  const app = express();
+    // Connect to PG DB
+    await createConnection({
+      type: 'postgres',
+      database: 'localsales',
+      username: 'ryan',
+      password: 'postgres',
+      port: 5432,
+      logging: true,
+      synchronize: true,
+      entities: [User]
+    });
 
-  server.applyMiddleware({ app });
+    const app = express();
 
-  app.listen({ port: 9999 }, () =>
-    console.log(`🚀 Server ready at http://localhost:9999${server.graphqlPath}`)
-  );
+    server.applyMiddleware({ app });
+
+    app.listen({ port: 9999 }, () =>
+      console.log(`🚀 Server ready at http://localhost:9999${server.graphqlPath}`));
+    } catch (e) {
+      throw e;
+    }
 };
 
 startServer();

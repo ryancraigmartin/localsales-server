@@ -1,11 +1,17 @@
-import { Field } from "type-graphql"
+// import { v4 as uuidv4 } from 'uuid';
 import { Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, BaseEntity } from 'typeorm'
+import { Field, ObjectType, ID } from "type-graphql"
 
+@ObjectType()
 @Entity()
 export class User extends BaseEntity{
-  @Field()
+  @Field(() => ID)
   @PrimaryGeneratedColumn()
   id!: number;
+
+  @Field()
+  @Column({ unique: true })
+  uuid!: string;
 
   @Field()
   @Column({ unique: true })
@@ -27,6 +33,6 @@ export class User extends BaseEntity{
   @UpdateDateColumn()
   updatedAt: Date;
 
-  // @OneToMany(() => Listing, (listing) => listing.creator)
+  // @OneToMany(() => Listing, (listing) => listing.user)
   // listings: Listing[];
 }
