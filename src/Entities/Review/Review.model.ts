@@ -1,6 +1,6 @@
+// import { User } from '../User/User.model';
 import { Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, BaseEntity } from 'typeorm'
 import { Field, ObjectType, ID } from "type-graphql"
-import { Condition } from './Listing.enums';
 
 @ObjectType()
 @Entity()
@@ -13,17 +13,29 @@ export class Listing extends BaseEntity{
   @Column({ unique: true })
   uuid!: string;
 
+  // @Field()
+  // @Column({ unique: true })
+  // postingUser!: User;
+
+  // @Field()
+  // @Column({ unique: true })
+  // reviewedUser!: User;
+
   @Field()
   @Column()
   title!: string;
 
   @Field()
   @Column()
-  description!: string;
+  content!: string;
 
-  @Field()
-  @Column()
-  condition!: Condition;
+  // @Field()
+  // @Column()
+  // tags!: [Tag];
+
+  // @Field()
+  // @Column()
+  // photos!: [Photo];
 
   @Field(() => String)
   @CreateDateColumn()

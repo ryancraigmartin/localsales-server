@@ -1,3 +1,4 @@
+// import { Listing } from './../Listing/Listing.model';
 import { Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, BaseEntity } from 'typeorm'
 import { InputType, Field, ObjectType, ID } from "type-graphql"
 
@@ -10,7 +11,7 @@ export class User extends BaseEntity{
 
   @Field()
   @Column({ unique: true })
-  user_uuid!: string;
+  uuid!: string;
 
   @Field()
   @Column({ unique: true })
@@ -24,6 +25,26 @@ export class User extends BaseEntity{
   @Column()
   password!: string;
 
+  @Field()
+  @Column()
+  firstName?: string;
+
+  @Field()
+  @Column()
+  lastName?: string;
+
+  @Field()
+  @Column()
+  nickname?: string;
+
+  @Field()
+  @Column()
+  bio?: string;
+
+  @Field()
+  @Column()
+  location?: string;
+
   @Field(() => String)
   @CreateDateColumn()
   createdAt: Date;
@@ -32,8 +53,30 @@ export class User extends BaseEntity{
   @UpdateDateColumn()
   updatedAt: Date;
 
-  // @OneToMany(() => Listing, (listing) => listing.user)
-  // listings: Listing[];
+  // @Field()
+  // @Column()
+  // listings?: [Listing];
+
+  // @Field()
+  // @Column()
+  // lookingFor?: string;
+
+  // @Field()
+  // @Column()
+  // tradingFor?: string;
+
+  // @Field()
+  // @Column()
+  // tags?: [Tags];
+
+  // @Field()
+  // @Column()
+  // reviews?: [reviews];
+
+  // @Field()
+  // @Column()
+  // reputation?: Reputation;
+
 }
 
 @InputType({description: "Input needed to create a new user."})

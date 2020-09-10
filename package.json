@@ -1,7 +1,7 @@
 {
-  "name": "typegresql",
+  "name": "localsales-server",
   "version": "1.0.0",
-  "description": "typegresql",
+  "description": "localsales-server",
   "main": "server.ts",
   "scripts": {
     "start": "ts-node src/server.ts",

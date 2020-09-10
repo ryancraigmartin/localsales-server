@@ -10,18 +10,16 @@ export class UserResolver {
   }
 
   @Query(() => User, { nullable: true })
-  getUserById(@Arg("ID", () => String) ID: String) {
+  userById(@Arg("ID", () => String) ID: String) {
     return User.findOne({ where: { ID: ID } })
   }
 
   @Mutation(() => User)
-  async addUser(@Arg("data") {username, password, email}: AddUserInput) {
+  async addUser(@Arg("data") userData: AddUserInput) {
       try {
         const user = User.create({
-          user_uuid: uuidv4(),
-          username,
-          password,
-          email,
+          uuid: uuidv4(),
+          ...userData
         });
         console.log(user);
         await user.save();

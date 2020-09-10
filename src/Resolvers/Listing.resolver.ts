@@ -11,7 +11,7 @@ export class ListingResolver {
   }
 
   @Query(() => Listing, { nullable: true })
-  getListingById(@Arg("listing_uuid", () => String) listing_uuid: String) {
+  listingById(@Arg("listing_uuid", () => String) listing_uuid: String) {
     return Listing.findOne({ where: { listing_uuid: listing_uuid } })
   }
 
@@ -19,7 +19,7 @@ export class ListingResolver {
   async addListing(@Arg("data") listingData: AddListingInput) {
       try {
         const listing = Listing.create({
-          listing_uuid: uuidv4(),
+          uuid: uuidv4(),
           ...listingData,
         });
         console.log(listing);
