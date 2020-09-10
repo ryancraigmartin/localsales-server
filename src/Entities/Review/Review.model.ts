@@ -1,17 +1,25 @@
+import { ReviewScore } from './Review.enums'
 // import { User } from '../User/User.model';
-import { Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, BaseEntity } from 'typeorm'
-import { Field, ObjectType, ID } from "type-graphql"
+import {
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+  BaseEntity,
+} from 'typeorm'
+import { Field, ObjectType, ID } from 'type-graphql'
 
 @ObjectType()
 @Entity()
-export class Listing extends BaseEntity{
+export class Review extends BaseEntity {
   @Field(() => ID)
   @PrimaryGeneratedColumn()
-  id!: number;
+  id!: number
 
   @Field()
   @Column({ unique: true })
-  uuid!: string;
+  reviewUUID!: string
 
   // @Field()
   // @Column({ unique: true })
@@ -23,27 +31,32 @@ export class Listing extends BaseEntity{
 
   @Field()
   @Column()
-  title!: string;
+  title!: string
+
+  // TODO implement content as a separate type to include comments and photos.
+  @Field()
+  @Column()
+  content!: string
 
   @Field()
   @Column()
-  content!: string;
-
-  // @Field()
-  // @Column()
-  // tags!: [Tag];
+  score!: ReviewScore
 
   // @Field()
   // @Column()
   // photos!: [Photo];
 
+  // @Field()
+  // @Column()
+  // tags!: [Tag];
+
   @Field(() => String)
   @CreateDateColumn()
-  createdAt: Date;
+  createdAt: Date
 
   @Field(() => String)
   @UpdateDateColumn()
-  updatedAt: Date;
+  updatedAt: Date
 
   // @Field()
   // @Column()
