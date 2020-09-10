@@ -32,8 +32,8 @@ const startServer = async () => {
 
     app.listen({ port: 9999 }, () =>
       console.log(`🚀 Server ready at http://localhost:9999${server.graphqlPath}`),
-      )
-    } catch (e) {
+    )
+  } catch (e) {
     console.error(e)
     throw e
   }
