@@ -7,36 +7,43 @@ const resolvers = require('./Resolvers/index')
 const entities = require('./Entities/index')
 
 const startServer = async () => {
-  try {
-    // Build TypeGraphQL executable schema
-    const schema = await buildSchema({ resolvers })
+  // Build TypeGraphQL executable schema
+  const schema = await buildSchema({
+    resolvers,
+    validate: false,
+  })
 
-    // Create server with TypeGraphQL schema
-    const server = new ApolloServer({ schema })
+  // Create server with TypeGraphQL schema
+  const server = new ApolloServer({
+    schema,
+    context: ({ req, res }) => ({
+      req,
+      res,
+    }),
+  })
 
-    // Connect to PG DB
-    await createConnection({
-      type: 'postgres',
-      database: 'localsales',
-      username: 'ryan',
-      password: 'postgres',
-      port: 5432,
-      logging: true,
-      synchronize: true,
-      entities,
-    })
+  // Connect to PG DB
+  await createConnection({
+    type: 'postgres',
+    database: 'localsales',
+    username: 'ryan',
+    password: 'postgres',
+    port: 5432,
+    logging: true,
+    synchronize: true,
+    entities,
+  })
 
-    const app = express()
+  const app = express()
 
-    server.applyMiddleware({ app })
+  // Creates our GQL endpoint on Express
+  server.applyMiddleware({ app })
 
-    app.listen({ port: 9999 }, () =>
-      console.log(`🚀 Server ready at http://localhost:9999${server.graphqlPath}`),
-    )
-  } catch (e) {
-    console.error(e)
-    throw e
-  }
+  app.listen({ port: 9999 }, () =>
+    console.log(`🚀 Server ready at http://localhost:9999${server.graphqlPath}`),
+  )
 }
 
-startServer()
+startServer().catch(err => {
+  console.error(err)
+})
