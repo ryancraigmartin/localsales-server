@@ -1,25 +1,29 @@
-import { v4 as uuidv4 } from 'uuid'
 import { User } from '../Entities/User/User.model'
 import { AddUserInput } from '../Entities/User/User.inputs'
 import { Resolver, Query, Mutation, Arg } from 'type-graphql'
+import { getRepository } from 'typeorm'
 
 @Resolver()
 export class UserResolver {
   @Query(() => [User])
   allUsers(): Promise<User[]> {
-    return User.find()
+    return getRepository(User).find()
   }
 
   @Query(() => User, { nullable: true })
   userById(@Arg('userUUID', () => String) userUUID: string): Promise<User | undefined> {
-    return User.findOne({ where: { userUUID: userUUID } })
+    return getRepository(User)
+      .findOne({
+        where: {
+            userUUID: userUUID,
+          },
+        })
   }
 
   @Mutation(() => User)
-  async addUser(@Arg('data') userData: AddUserInput): Promise<User | undefined> {
+  async addUser(@Arg('data') userData: AddUserInput): Promise<User | Error> {
     try {
-      const user = User.create({
-        userUUID: uuidv4(),
+      const user = getRepository(User).create({
         ...userData,
       })
       console.log(user)
