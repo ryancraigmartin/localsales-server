@@ -1,4 +1,5 @@
-// import { Listing } from './../Listing/Listing.model';
+import { Listing } from './../Listing/Listing.model'
+import { v4 as uuidv4 } from 'uuid'
 import {
   Column,
   Entity,
@@ -6,50 +7,47 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   BaseEntity,
+  BeforeInsert,
 } from 'typeorm'
-import { Field, ObjectType, ID } from 'type-graphql'
+import { Field, ObjectType } from 'type-graphql'
 
 @ObjectType()
 @Entity()
 export class User extends BaseEntity {
-  @Field(() => ID)
-  @PrimaryGeneratedColumn()
-  id!: number
+  @Field()
+  @PrimaryGeneratedColumn('uuid')
+  id: string
 
   @Field()
-  @Column({ unique: true })
-  userUUID!: string
-
-  @Field()
-  @Column({ unique: true })
+  @Column('varchar', { length: 40, unique: true })
   username!: string
 
   @Field()
-  @Column({ unique: true })
+  @Column('varchar', { length: 75, unique: true })
   email!: string
 
   @Field()
-  @Column()
+  @Column('varchar', { length: 25 })
   password!: string
 
   @Field({ nullable: true })
-  @Column({ nullable: true })
+  @Column('varchar', { length: 25, nullable: true })
   firstName?: string
 
   @Field({ nullable: true })
-  @Column({ nullable: true })
+  @Column('varchar', { length: 25, nullable: true })
   lastName?: string
 
   @Field({ nullable: true })
-  @Column({ nullable: true })
+  @Column('varchar', { length: 40, nullable: true })
   nickname?: string
 
   @Field({ nullable: true })
-  @Column({ nullable: true })
+  @Column('text', { nullable: true })
   bio?: string
 
   @Field({ nullable: true })
-  @Column({ nullable: true })
+  @Column('varchar', { length: 75, nullable: true })
   location?: string
 
   @Field(() => String)
@@ -60,9 +58,7 @@ export class User extends BaseEntity {
   @UpdateDateColumn()
   updatedAt: Date
 
-  // @Field()
-  // @Column()
-  // listings?: [Listing];
+  listings?: [Listing];
 
   // @Field()
   // @Column()
@@ -83,4 +79,9 @@ export class User extends BaseEntity {
   // @Field()
   // @Column()
   // reputation?: Reputation;
+
+  @BeforeInsert()
+  addUUID(): string {
+    return (this.id = uuidv4())
+  }
 }

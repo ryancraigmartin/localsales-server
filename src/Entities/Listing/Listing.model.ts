@@ -1,3 +1,4 @@
+import { User } from './../User/User.model'
 import {
   Column,
   Entity,
@@ -5,32 +6,33 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   BaseEntity,
+  ManyToOne,
+  BeforeInsert,
 } from 'typeorm'
-import { Field, ObjectType, ID } from 'type-graphql'
+import { Field, ObjectType } from 'type-graphql'
 import { Condition } from './Listing.enums'
 
 @ObjectType()
 @Entity()
 export class Listing extends BaseEntity {
-  @Field(() => ID)
-  @PrimaryGeneratedColumn()
-  id!: number
+  @Field()
+  @PrimaryGeneratedColumn('uuid')
+  id: string
 
   @Field()
-  @Column({ unique: true })
-  listingUUID!: string
-
-  @Field()
-  @Column()
+  @Column('varchar', { length: 75 })
   title!: string
 
   @Field()
-  @Column()
+  @Column('varchar', { length: 75 })
   description!: string
 
   @Field()
   @Column()
   condition!: Condition
+
+  @ManyToOne(() => User, user => user.listings)
+  user!: User
 
   @Field(() => String)
   @CreateDateColumn()
@@ -56,7 +58,16 @@ export class Listing extends BaseEntity {
   // @Column()
   // relatedListings?: [Listing];
 
-  // @Field()
-  // @Column()
-  // isPromoted?: boolean;
+  @Field()
+  @Column({ default: false })
+  isActive: boolean
+
+  @Field()
+  @Column({ default: false })
+  isPromoted: boolean
+
+  @BeforeInsert()
+  setInitialAttributes(): boolean {
+    return (this.isActive = false) && (this.isPromoted = false)
+  }
 }
